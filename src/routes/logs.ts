@@ -13,9 +13,18 @@ export const logRoutes = new Elysia({ prefix: '/logs' })
     })
 
     // Create a log entry (Internal use mainly, but exposed for frontend generic logs if needed)
-    .post('/', async ({ body }: any) => {
+    .post('/', async ({ body, request }: any) => {
         try {
-            const newLog = new mLogs(body);
+            const forwardedFor = request.headers.get('x-forwarded-for');
+            const realIp = request.headers.get('x-real-ip');
+            const derivedIp = (forwardedFor ? String(forwardedFor).split(',')[0].trim() : '') || realIp || 'unknown';
+            const userAgent = request.headers.get('user-agent') || 'unknown';
+
+            const newLog = new mLogs({
+                ...body,
+                ip: body.ip || derivedIp,
+                userAgent: body.userAgent || userAgent
+            });
             await newLog.save();
             return { success: true, data: newLog };
         } catch (e: any) {
@@ -26,6 +35,10 @@ export const logRoutes = new Elysia({ prefix: '/logs' })
             action: t.String(),
             details: t.String(),
             user: t.Optional(t.String()),
-            level: t.Optional(t.String())
+            level: t.Optional(t.String()),
+            ip: t.Optional(t.String()),
+            userAgent: t.Optional(t.String()),
+            path: t.Optional(t.String()),
+            metadata: t.Optional(t.Object({}))
         })
     });

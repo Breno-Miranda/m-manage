@@ -11,6 +11,8 @@ import { taskRoutes } from './routes/tasks';
 import { blogRoutes } from './routes/blogs';
 import { contentRoutes } from './routes/content';
 import { logRoutes } from './routes/logs';
+import { leadRoutes } from './routes/leads';
+import { mjsonRoutes } from './routes/mjson';
 
 // 1. Inicializa Conexão com Banco
 await connectMongo();
@@ -31,5 +33,7 @@ const app = new Elysia()
     .use(blogRoutes) // Blogs
     .use(contentRoutes) // Content Managementes)
     .use(logRoutes)
+    .use(leadRoutes)
+    .use(mjsonRoutes)
 
     .listen(3000);

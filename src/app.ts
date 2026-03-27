@@ -7,6 +7,8 @@ import { healthtechRoutes } from './routes/healthtech';
 import { appRoutes } from './routes/apps';
 import { blogRoutes } from './routes/blogs';
 import { logRoutes } from './routes/logs';
+import { leadRoutes } from './routes/leads';
+import { mjsonRoutes } from './routes/mjson';
 import { cors } from '@elysiajs/cors';
 
 /**
@@ -103,6 +105,8 @@ export const app = new Elysia()
     .use(appRoutes)
     .use(blogRoutes)
     .use(logRoutes)
+    .use(leadRoutes)
+    .use(mjsonRoutes)
 
     // Documentação automática (Swagger)
     .get('/docs', () => ({
@@ -126,5 +130,14 @@ export const app = new Elysia()
                 get: 'GET /tasks/:id',
                 create: 'POST /tasks',
             },
+            leads: {
+                create: 'POST /leads',
+                list: 'GET /leads'
+            },
+            mjson: {
+                list: 'GET /mjson',
+                getByKey: 'GET /mjson/:key',
+                upsert: 'POST /mjson'
+            }
         },
     }));
