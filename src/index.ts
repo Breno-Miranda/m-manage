@@ -11,7 +11,7 @@ import { taskRoutes } from './routes/tasks';
 import { blogRoutes } from './routes/blogs';
 import { contentRoutes } from './routes/content';
 import { logRoutes } from './routes/logs';
-import { leadRoutes } from './routes/leads';
+import { mLeadsRequestRoutes } from './modules/mLeadsRequest';
 import { mjsonRoutes } from './routes/mjson';
 
 // 1. Inicializa Conexão com Banco
@@ -33,7 +33,8 @@ const app = new Elysia()
     .use(blogRoutes) // Blogs
     .use(contentRoutes) // Content Managementes)
     .use(logRoutes)
-    .use(leadRoutes)
-    .use(mjsonRoutes)
+    .use(mLeadsRequestRoutes)
+    .use(mjsonRoutes);
 
-    .listen(3000);
+const listenPort = Number(process.env.PORT);
+app.listen(Number.isFinite(listenPort) && listenPort > 0 ? listenPort : 3000);

@@ -7,7 +7,7 @@ import { healthtechRoutes } from './routes/healthtech';
 import { appRoutes } from './routes/apps';
 import { blogRoutes } from './routes/blogs';
 import { logRoutes } from './routes/logs';
-import { leadRoutes } from './routes/leads';
+import { mLeadsRequestRoutes } from './modules/mLeadsRequest';
 import { mjsonRoutes } from './routes/mjson';
 import { cors } from '@elysiajs/cors';
 
@@ -105,7 +105,7 @@ export const app = new Elysia()
     .use(appRoutes)
     .use(blogRoutes)
     .use(logRoutes)
-    .use(leadRoutes)
+    .use(mLeadsRequestRoutes)
     .use(mjsonRoutes)
 
     // Documentação automática (Swagger)
